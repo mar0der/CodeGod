@@ -12,16 +12,32 @@ const Dispatcher = (function() {
     });
   }
 
-  // Function to handle the 'readFile' command
-  function readFile(filePath) {
-    console.log("Dispatcher: Inside readFile function");
-    chrome.runtime.sendMessage({
-      action: 'readFile',
-      filePath: filePath
-    }, function(response) {
-      console.log("Dispatcher: Received response in readFile:", response);
-    });
-  }
+// Inside dispatcher.js
+let lastCommandResult = null;
+
+// Function to handle the 'readFile' command
+function readFile(filePath) {
+  console.log("Dispatcher: Inside readFile function");
+  chrome.runtime.sendMessage({
+    action: 'readFile',
+    filePath: filePath
+  }, function(response) {
+    console.log("Dispatcher: Received response in readFile:", response);
+    lastCommandResult = response.content;  // Store the content
+
+    // Inject the content into GPT textfield
+    const textField = document.querySelector('textarea#prompt-textarea[data-id][placeholder="Send a message"]'); // Replace 'SELECTOR_FOR_GPT_TEXTFIELD' with the actual CSS selector
+    if (textField && lastCommandResult) {
+      textField.value = lastCommandResult;
+    }
+
+    // Optionally, automatically click the 'Send' button
+    const sendButton = document.querySelector('button[data-testid="send-button"][disabled] > span > svg'); // Replace 'SELECTOR_FOR_GPT_SEND_BUTTON' with the actual CSS selector
+    if (sendButton) {
+      sendButton.click();
+    }
+  });
+}
 
   // Function to handle the 'getProjectStructure' command
   function getProjectStructure() {
