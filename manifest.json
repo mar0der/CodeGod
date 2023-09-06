@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "GPT Developer",
+  "version": "1.0.1",
+  "description": "Putting GPT coding skills on steroids",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": ["nativeMessaging", "activeTab", "scripting", "downloads"],
+  "host_permissions": ["https://chat.openai.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["utils/parser.js", "utils/dispatcher.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
