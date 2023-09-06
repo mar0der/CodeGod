@@ -24,7 +24,7 @@ def create_file():
     with open(file_path, "w") as f:
         f.write(code)
 
-    logging.info("Flask: File created successfully.")
+    logging.info("Flask: File created successfully."+file_path)
     return jsonify({'status': 'success'})
 
 @app.route('/read_file', methods=['POST'])

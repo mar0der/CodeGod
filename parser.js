@@ -30,7 +30,6 @@ const Parser = (function() {
                 console.log("Parser: Found code snippet element");  // Debugging comment
                 const code = codeSnippetElement.querySelector('code');
                 if (code) {
-                    console.log("Parser: Extracted code from snippet");  // Debugging comment
                     command.code = code.textContent.trim();
                 }
             }
@@ -41,8 +40,7 @@ const Parser = (function() {
         // Tries to find "readFile" command
         const readFileRegex = new RegExp(patterns.readFile, 'g');
         const readFileMatches = lastMessageNode.textContent.matchAll(readFileRegex);
-        console.log("Parser: Content to be searched:" + lastMessageNode.textContent)
-        console.log("Parser: readFileMatch array:", readFileMatches);
+        console.log("Parser: readFileMatch array:");
 
         for (const match of readFileMatches) {
             const filePath = match[1]; // The captured group containing the file path

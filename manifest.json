@@ -24,7 +24,7 @@
   "content_scripts": [
     {
       "matches": ["https://chat.openai.com/*"],
-      "js": ["utils/parser.js", "utils/dispatcher.js", "content.js"],
+      "js": ["parser.js", "feedbackProvider.js", "dispatcher.js", "content.js"],
       "run_at": "document_idle"
     }
   ]
