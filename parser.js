@@ -3,7 +3,7 @@ const Parser = (function() {
     // Regex patterns for the commands
     const patterns = {
       createFile: /@createFile\("(.+?)"\)/,
-      readFile: /@readFile\("(.+?)"\)/,
+      readFile: /@readFile\("(.+?)"\)/g,
       getProjectStructure: /@getProjectStructure\(\)/
     };
 
@@ -40,7 +40,7 @@ const Parser = (function() {
         // Tries to find "readFile" command
         const readFileRegex = new RegExp(patterns.readFile, 'g');
         const readFileMatches = lastMessageNode.textContent.matchAll(readFileRegex);
-        console.log("Parser: readFileMatch array:");
+        console.log("Parser: readFileMatch array:"+ readFileMatches.length);
 
         for (const match of readFileMatches) {
             const filePath = match[1]; // The captured group containing the file path

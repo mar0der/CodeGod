@@ -1,4 +1,7 @@
-// content.js
+// Main Module -> starts here
+function x(x){
+    console.log(x);
+}
 
 // Function to hash strings
 function hashString(str) {
@@ -10,15 +13,22 @@ function hashString(str) {
   return hash;
 }
 
-let lastHash = null;
+// Global state object
+const globalState = {
+    pendingReads: 0,
+    readResults: []
+};
 
-// Main Module -> starts here
-function x(x){
-    console.log(x);
-}
+let lastHash = null;
 
 (function(Parser, Dispatcher) {
     let typingLoaderWasPresent = false;
+    // Global state object
+
+    // Utility function to count the number of 'readFile' commands in an array of commands
+    function countReadCommands(commands) {
+        return commands.filter(command => command.command === 'readFile').length;
+        }
 
     // Checks if loader is present
     function isTypingLoaderPresent() {
@@ -55,10 +65,10 @@ function x(x){
                 console.log("Content: Parse message sent");
                 const commands = Parser.parseMessage(lastMessageNode);
                 if (commands) {
-                    console.log("Content: Commands Dispatched:" + commands.length);
-                    for (const command of commands) {
-                        Dispatcher.dispatchCommand(command);
-                    }
+                  globalState.pendingReads = countReadCommands(commands);  // Set the number of pending reads
+                  for (const command of commands) {
+                    Dispatcher.dispatchCommand(command);
+                  }
                 }
                 lastHash = newHash;
             }

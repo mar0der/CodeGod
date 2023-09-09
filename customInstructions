@@ -35,6 +35,8 @@ The command should be the very first thing in your response and the content snip
 //create app.js
 Can you help me create a JavaScript file named app.js with a simple "Hello, World!" log statement?
 
+read app.js file with the file read command
+
 //read existing file test
 you have a build in commands (refere to your custom insturctions) one of them is read file. there is file app.js so please read its content without issuing other comments in your response
 
@@ -61,4 +63,7 @@ Get the project structure
       </code>
    </div>
 </div>
+
+List of issues:
+when you read multiple files at a time we have to not trigger sending until the last one and also we have to provide the name before the content in the prompt
 
